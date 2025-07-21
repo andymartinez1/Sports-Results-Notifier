@@ -2,9 +2,11 @@
 
 public class Game
 {
-    public string Winner { get; set; }
+    public DateOnly Date { get; set; }
 
-    public string Loser { get; set; }
+    public string WinningTeam { get; set; } = String.Empty;
+
+    public string LosingTeam { get; set; } = String.Empty;
 
     public int WinnerScore { get; set; }
 
