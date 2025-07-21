@@ -8,8 +8,8 @@ public class ScraperService : IScraperService
     public HtmlDocument ScrapeHtml(string html)
     {
         var url = "https://www.basketball-reference.com/boxscores/";
-        HtmlWeb web = new HtmlWeb();
-        HtmlDocument doc = web.Load(url);
+        var web = new HtmlWeb();
+        var doc = web.Load(url);
 
         return doc;
     }
@@ -30,24 +30,21 @@ public class ScraperService : IScraperService
             .DocumentNode.SelectSingleNode(".//tr[@class='loser']/td[1]")
             .InnerText;
 
-        string winnerScoreStr = doc
+        var winnerScoreStr = doc
             .DocumentNode.SelectSingleNode(".//tr[@class='winner']/td[2]")
             .InnerText;
         int winnerScore;
         if (int.TryParse(winnerScoreStr, out winnerScore))
-        {
             game.WinnerScore = winnerScore;
-        }
 
-        string loserScoreStr = doc
+        var loserScoreStr = doc
             .DocumentNode.SelectSingleNode(".//tr[@class='loser']/td[2]")
             .InnerText;
         int loserScore;
         if (int.TryParse(loserScoreStr, out loserScore))
-        {
             game.LoserScore = loserScore;
-        }
 
+        EmailService.SendEmail(game);
         return game;
     }
 }

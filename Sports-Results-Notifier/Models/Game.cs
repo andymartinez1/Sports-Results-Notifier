@@ -4,9 +4,9 @@ public class Game
 {
     public DateOnly Date { get; set; }
 
-    public string WinningTeam { get; set; } = String.Empty;
+    public string WinningTeam { get; set; } = string.Empty;
 
-    public string LosingTeam { get; set; } = String.Empty;
+    public string LosingTeam { get; set; } = string.Empty;
 
     public int WinnerScore { get; set; }
 
