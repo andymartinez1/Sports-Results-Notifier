@@ -15,6 +15,9 @@ public class Menu
     public void MainMenu()
     {
         AnsiConsole.Write(new FigletText("Sports Results"));
-        _controller.GetGameInfo();
+
+        var game = _controller.GetGameInfo();
+
+        _controller.SendEmail(game);
     }
 }

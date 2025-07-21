@@ -1,13 +1,26 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Configuration;
 using Sports_Results_Notifier.Models;
 
 namespace Sports_Results_Notifier.Services;
 
 public class ScraperService : IScraperService
 {
+    private readonly IConfiguration _configuration;
+
+    public ScraperService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    public string GetWebsiteString()
+    {
+        return _configuration["WebsiteToScrape:Website"];
+    }
+
     public HtmlDocument ScrapeHtml(string html)
     {
-        var url = "https://www.basketball-reference.com/boxscores/";
+        var url = GetWebsiteString();
         var web = new HtmlWeb();
         var doc = web.Load(url);
 
@@ -44,7 +57,6 @@ public class ScraperService : IScraperService
         if (int.TryParse(loserScoreStr, out loserScore))
             game.LoserScore = loserScore;
 
-        EmailService.SendEmail(game);
         return game;
     }
 }
